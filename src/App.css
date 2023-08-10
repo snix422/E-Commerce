@@ -37,9 +37,24 @@
     }
 }
 
-.link:hover {
-    border-bottom: 2px solid red;
-    color: white;
+.categories_link {
+    font-family: 'Montserrat';
+    font-size: 20px;
+    transition: 0.5s all;
+}
+
+.categories_link:hover {
+    color: red;
+    transform: scale(1.1);
+    color: #FFFFFF;
+    text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+}
+
+.link {
+    text-decoration: none;
+    font-size: 25px;
+    font-family: 'Montserrat';
+    margin-top: 20px;
 }
 
 .product {

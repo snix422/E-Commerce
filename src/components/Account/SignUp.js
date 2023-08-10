@@ -1,87 +1,78 @@
 import { Typography, Box, Container, TextField, Button, Alert } from "@mui/material"
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {  useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import axios from "axios";
 import { registerUsers } from "../../Context/registerUsers";
+import useSignUpOrSignIn from "../../hooks/useSignUpOrSignIn";
 
 
 const SignUp =  () => {
    
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState({
+   
+    const [error,setError] = useState({
         login:'',
-        password:''
+        pass:''
+      });
+    const [form, setForm] = useState({
+        login:'',
+        pass:''
     })
-    const [response, setResponse] = useState(null);
+    const {formError, isError, loginOrRegistration} = useSignUpOrSignIn();
 
     const navigate = useNavigate();
     const registers = useContext(registerUsers);
+
+    useEffect(()=>{
+        if(isError === false){
+          navigate('/');
+        }
+      },[isError])
+
+    const updateField = (e) => {
+        setForm({
+          ...form,
+          [e.target.name]: e.target.value
+        })
+        console.log(form);
+    }
+
+    const validatorUser = () => {
+        if(form.login.length === 0){
+          setError(previousState=>{return{...previousState, login:'Login jest wymagany'}})
+          return 'Login jest wymagany'
+        }else if(form.login.length < 4){
+          setError(previousState=>{return{...previousState,login: 'Login musi posiadać min. 4 znaków'}});
+          return 'Login musi posiadać min. 4 znaków'
+        }
+        if(form.pass.length === 0){
+          setError(previousState=>{return{...previousState, pass: 'Hasło jest wymagane'}});
+         return 'Hasło jest wymagane'
+        }else if(form.pass.length < 5 ){
+          setError(previousState=>{return{...previousState, pass: 'Hasło musi posiadać min. 5 znaków'}});
+          return 'Hasło musi posiadać min. 5 znaków'
+        }
+        return null
+      }
+
   
     const RegisterUser = async () => {
-        
-        if(login.length == 0){
-            setErrors(prevState => {
-               return{
-                ...prevState, 
-                login:'za mało liter',
-               }})
-               return
-        }else{
-            setErrors(prevState => {
-                return{
-                 ...prevState, 
-                 login:'',
-                }})
-        }
-        
-        if(password.length < 5){
-            setErrors(prevState => {
-                return{
-                 ...prevState, 
-                 password:'Wymagane 4 znaki',
-                }})
-            return
-        }else{
-            setErrors(prevState => {
-                return{
-                 ...prevState, 
-                 password:'',
-                }})
-        }
+        setError({login:'',pass:''})
+        let errorMsg = validatorUser();
+        if(errorMsg){
+            if(errorMsg === 'Login jest wymagany'){
+              return
+            }else if(errorMsg = 'Login musi posiadać min. 4 znaków'){
+              return
+            }
+            if(errorMsg === 'Hasło jest wymagane'){
+              return
+            }else if(errorMsg === 'Hasło musi posiadać min. 5 znaków'){
+              return
+            }
+          }
 
-        try{
-            const res =  await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCCUXA0GqA-e_jHQUUko5UaynHFNfYpOKg', {
-            email: login,
-            password: password,
-            returnSecureToken: true,
-           })
-           console.log(res);
-           registers.push({
-            email:res.data.email,
-            password:password,
-            idUser:res.data.localId
-           });
-            }catch(ex){
-            setResponse(ex.response.data.error.message);
-            if(response !== null){
-                setLogin('');
-                setPassword('');
-                return
-              }
-           }
-        
-        
-        setLogin('');
-        setPassword('');
-        setErrors(prevState => {
-            return{
-             ...prevState, 
-             login:'',
-             password:''
-            }})
-        navigate('/');
+          await loginOrRegistration('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCCUXA0GqA-e_jHQUUko5UaynHFNfYpOKg',form.login,form.pass);
+          setError('');
     }
 
     const backtoHome = () => {
@@ -96,12 +87,12 @@ const SignUp =  () => {
         <Container sx={{backgroundColor: 'rgb(240, 238, 238)', minWidth: '100vw', height: '100vh',display:'flex', justifyContent:'center', alignItems:'center'}}>
             <Box sx={{backgroundColor: 'white', width: '50vw', minHeight: '40vh', borderRadius: '20px', display: 'flex', flexDirection:'column', alignItems:'center', boxShadow: '-6px 5px 21px -7px rgba(8,8,8,1)'}}>
             <Typography sx={{ fontFamily: 'Montserrat', fontSize: '25px', marginBottom: '30px', marginTop:'20px'}}>Rejestracja</Typography>
-            {errors.login.length > 0 ? <TextField  error helperText={errors.login} value={login} onChange={(e)=>setLogin(e.target.value)} variant="outlined" label="Login" color="warning" sx={{width:'300px', marginBottom:'10px'}}></TextField> 
-            : <TextField  value={login} onChange={(e)=>setLogin(e.target.value)} variant="outlined" label="Login" color="warning" sx={{width:'300px', marginBottom:'10px'}}></TextField>}
-            {errors.password ? <TextField type="password" error helperText={errors.password} value={password} onChange={(e)=>setPassword(e.target.value)} variant="outlined"  color="warning"   sx={{width:'300px', marginBottom:'30px'}}></TextField> 
-            : <TextField type="password" value={password} onChange={(e)=>setPassword(e.target.value)} variant="outlined"  color="warning" label="Hasło" sx={{width:'300px', marginBottom:'30px'}}></TextField>}
-             {response  ? <Alert severity="error"><Typography sx={{fontFamily:'Montserrat', fontSize:'15px', fontWeight:'bold'}}>Ten mail jest już używany!</Typography></Alert> : null }
-            <Button color="warning" variant="contained" disableElevation sx={{width: '250px', marginTop:'20px'}} onClick={RegisterUser}>Zarejestruj się</Button>
+            {error.login ? <TextField  name="login" error helperText={error.login} value={form.login} onChange={updateField} variant="outlined" label="Login" color="warning" sx={{width:'300px', marginBottom:'10px'}}></TextField> 
+            : <TextField  name="login" value={form.login} onChange={updateField} variant="outlined" label="Login" color="warning" sx={{width:'300px', marginBottom:'10px'}}></TextField>}
+            {error.pass ? <TextField name="pass" type="password" error helperText={error.pass} value={form.password} onChange={updateField} variant="outlined"  color="warning"   sx={{width:'300px', marginBottom:'30px'}}></TextField> 
+            : <TextField name="pass" type="password" value={form.password} onChange={updateField} variant="outlined"  color="warning" label="Hasło" sx={{width:'300px', marginBottom:'30px'}}></TextField>}
+             {formError === 'EMAIL_EXISTS'  ? <Alert severity="error"><Typography sx={{fontFamily:'Montserrat', fontSize:'15px', fontWeight:'bold'}}>Ten mail jest już używany!</Typography></Alert> : null }
+             {formError === 'INVALID_EMAIL'  ? <Alert severity="error"><Typography sx={{fontFamily:'Montserrat', fontSize:'15px', fontWeight:'bold'}}>E-Mail jest nieprawidłowy!</Typography></Alert> : null }<Button color="warning" variant="contained" disableElevation sx={{width: '250px', marginTop:'20px'}} onClick={RegisterUser}>Zarejestruj się</Button>
             <Typography sx={{marginTop: '10px'}}>Masz konto ?</Typography>
             <Button variant="outlined" color="success" sx={{marginTop: '10px'}} onClick={backToLogin}>Zaloguj się</Button>
             <Button variant="outlined" startIcon={<ArrowBackIcon />} sx={{marginTop: '50px', marginBottom:'20px' }} onClick={backtoHome}>

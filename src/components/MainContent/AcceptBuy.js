@@ -22,7 +22,6 @@ const AcceptBuy = () => {
             paymentMonth:day.getMonth()
            })
            }catch(ex){
-            console.log(ex.response);
            }
     }
 

@@ -1,11 +1,12 @@
 import { Box } from "@mui/material"
 import Footer from "./Footer/Footer"
-import CategoriesNavBar from "./Header/CategoriesNavBar"
 import MainNavBar from "./Header/NavBar/MainNavBar"
 import Bestsellers from "./MainContent/Bestsellers"
 import VisitedComponent from "./MainContent/VisitedComponent"
 import Recommends from "./MainContent/Recommends"
 import Promotions from "./MainContent/Promotions"
+import CategoriesNavBar from "./Header/CategoriesNavBar"
+
 
 const Layout = () => {
 

@@ -11,7 +11,13 @@ const CategoriesNavBar = () => {
     ]
     
     return (
-        <Container position="static" sx={{minWidth: '100%', height: '5vh', backgroundColor: 'gray', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '50px'}}>
+        <Container position="static" sx={{minWidth: '100%', height: '5vh', backgroundColor: 'gray', display: {
+            xl:'flex',
+            lg:'flex',
+            md:'flex',
+            sm:'flex',
+            xs:'none'
+        }, justifyContent: 'center', alignItems: 'center', gap: '50px'}}>
             <Stack direction={'row'} sx={{gap: {
                 xl:'200px',
                 lg:'150px',
@@ -21,7 +27,7 @@ const CategoriesNavBar = () => {
             }, color:'white'}}>
                 {categories.map((category=>{
                     return(
-                        <Link href={category.path} className='link' sx={{color:'white', textDecoration: 'none'}}>{category.label}</Link>
+                        <Link href={'/category' + category.path} className='categories_link' sx={{color:'white', textDecoration: 'none'}}>{category.label}</Link>
                     )
                 }))}
             </Stack>

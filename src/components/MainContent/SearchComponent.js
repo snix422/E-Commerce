@@ -1,38 +1,29 @@
-import { Container, Typography, Box, Image, Rating } from "@mui/material"
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react"
+import { Typography, Box,Rating, useScrollTrigger } from "@mui/material"
+import { Link} from "react-router-dom";
 import MainNavBar from "../Header/NavBar/MainNavBar";
 import CategoriesNavBar from "../Header/CategoriesNavBar";
 import Footer from "../Footer/Footer";
 import ProductPage from "./ProductPage";
+import { useEffect, useState } from "react";
 
 const SearchComponent = () => {
-
     const [searchItems, setSearchItems] = useState([]);
-    const [myProducts, setMyProducts] = useState([]);
-    const [products, setProducts] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    
-    const navigate = useNavigate();
     const items = JSON.parse(localStorage.getItem('searchItem'));
-      
+    
     const moveToProductPage = (product) => {
         return <ProductPage product={product} />
     }
 
-    const searchProduct = () => {
-       const item = myProducts.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase()));
-       setSearchTerm('');
-       localStorage.setItem('searchItem', JSON.stringify(item));
-       navigate('/search');
-      }
+    useEffect(()=>{
+        setSearchItems(items);
+    },[items])
 
     return(
             <>
             <MainNavBar sx={{minWidth:'100vw'}}/>
             <CategoriesNavBar />
             <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', minHeight:'50vh', gap:'50px'}}>
-                {items.length>0 ? items.map((product)=>{
+                {searchItems.length>0 ? searchItems.map((product)=>{
                     return(
                         <Box  className="product" onClick={() =>moveToProductPage(product)} sx={{display:'flex', flexDirection: 'column', alignItems:'center', border: '2px solid rgb(240, 238, 238)', borderRadius:'10px', marginBottom:'20px', width:{
                             xl:'15vw',
@@ -49,11 +40,10 @@ const SearchComponent = () => {
                           </Link>
                           </Box>
                     )
-                }): <Typography>Nie znaleziono produktu</Typography>}
+                }) : <Typography sx={{fontFamily:'Montserrat', fontSize:'30px'}}>Nie znaleziono produktu</Typography>}
             </Box>
             <Footer />
-            </>
-        
+            </>   
     )
 }
 

@@ -1,11 +1,80 @@
-import { Paper, InputBase, IconButton } from "@mui/material"
+import { Paper, InputBase, IconButton, Box, Container } from "@mui/material"
 import { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from "react-router-dom";
+import useFetch from "../../../hooks/useFetch";
 
-const InputSearch = (props) => {
+
+const InputSearch = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [displaySearch, setDisplaySearch] = useState(false);
+    const {data} = useFetch();
+    const dataFromHook = data.length ? Object.values(data[0]) : [];
+    
+    const navigate = useNavigate();
+
+    const searchProduct = () => {
+     if(searchTerm.length === 0) {
+      navigate('/')
+     }else{
+      const item = dataFromHook.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      localStorage.removeItem('searchItem');
+      localStorage.setItem('searchItem', JSON.stringify(item));
+      navigate('/search');
+      setSearchTerm('');
+     }
+    }
+
+    const takeSearchTerm = (e) =>{
+      setSearchTerm(e.target.value);
+    }
+
     return(
-        <Paper component={'form'} sx={{marginRight: {
+      <>
+        <Container sx={{height:'10vh', display:'flex', alignItems:'center'}}>
+        <Paper component={'form'} sx={{display:{
+            xl:'block',
+            lg:'block',
+            md:'block',
+            sm:'block',
+            xs:'none'
+          },marginTop:{
+            xl:0,
+            lg:0,
+            md:0,
+            sm:0,
+            xs:'200px'
+          }, borderRadius: '25px', maxHeight:'40px'}}>
+              <InputBase onChange={(e)=>{setSearchTerm(e.target.value)}} value={searchTerm} sx={{borderRadius: '50%', height:'100%', width: {
+                xl:'600px',
+                lg:'400px',
+                md:'400px',
+                sm:'200px',
+                xs:'300px'
+              }, paddingLeft:'20px', position:'relative'}} placeholder='Search...' />
+             <IconButton>
+             <SearchIcon onClick={searchProduct}/>
+             </IconButton>
+             
+              
+          </Paper>
+          </Container>
+          <Box>
+          {displaySearch ? <IconButton sx={{border:'2px solid red',display:{
+              xl:'none',
+              lg:'none',
+              md:'none',
+              sm:'none',
+              xs:'none'
+            }}}><CloseIcon onClick={()=>{setDisplaySearch(false)}}></CloseIcon></IconButton> : <IconButton sx={{display:{
+              xl:'none',
+              lg:'none',
+              md:'none',
+              sm:'none',
+              xs:'none'
+            }}}><SearchIcon onClick={()=>{setDisplaySearch(true)}}></SearchIcon></IconButton>}
+           {displaySearch ? <Paper component={'form'} sx={{marginRight: {
             xl: '400px',
             lg: '300px',
             md:'200px',
@@ -18,23 +87,24 @@ const InputSearch = (props) => {
             sm:'80px',
             xs:'30px'
           },display:{
-            xl:'block',
-            lg:'block',
-            md:'block',
-            sm:'block',
+            xl:'none',
+            lg:'none',
+            md:'none',
+            sm:'none',
             xs:'none'
-          }, borderRadius: '25px', maxHeight:'40px'}}>
-              <InputBase onChange={(e)=>{setSearchTerm(e.target.value)}} value={searchTerm} sx={{borderRadius: '50%', height:'100%', width: {
-                xl:'350px',
+          }, borderRadius: '25px', marginBottom:'5px', position:'relative', maxHeight:'40px', marginTop:'80px', border:'2px solid red'}}>
+              <InputBase onChange={takeSearchTerm} value={searchTerm} sx={{borderRadius: '50%',width: {
+                xl:'550px',
                 lg:'400px',
                 md:'300px',
                 sm:'230px',
-                xs:'120px'
-              }, paddingLeft:'20px',}} placeholder='Search...' />
-              <IconButton>
-                  <SearchIcon onClick={props.searchProduct}/>
+                xs:'250px'
+              }, paddingLeft:'20px'}} placeholder='Search...' />
+             
+              <IconButton sx={{position:'absolute', right:0}}>
+                  <SearchIcon onClick={searchProduct}/>
               </IconButton>
-          </Paper>
+          </Paper> : null }</Box></>
     )
 }
 

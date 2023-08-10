@@ -1,0 +1,21 @@
+.noactive {
+    max-width: 0px;
+    max-height: 0px;
+    opacity: 0;
+}
+
+.active {
+    width: 150px;
+    opacity: 1;
+    transition: 2s all;
+    margin-top: 250px;
+}
+
+.link {
+    text-decoration: none;
+    color: black
+}
+
+.link:hover {
+    color: black
+}

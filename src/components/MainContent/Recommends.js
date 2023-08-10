@@ -1,6 +1,4 @@
 import { Container, Typography,} from "@mui/material"
-import { useEffect, useState } from "react"
-import axios from "axios"
 import ProductItem from "../ProductItem/ProductItem"
 import useFetch from "../../hooks/useFetch"
 

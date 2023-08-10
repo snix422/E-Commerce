@@ -4,6 +4,8 @@ import { currentUser } from "../../Context/currentUser";
 import { Container, Typography, TableContainer, TableHead, TableBody, TableCell, TableRow, useStepContext } from "@mui/material"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import MainNavBar from "../Header/NavBar/MainNavBar";
+import CategoriesNavBar from "../Header/CategoriesNavBar";
 
 const PaymentHistory = () => {
 
@@ -36,9 +38,11 @@ const PaymentHistory = () => {
 
     return(
         <>
-        <Container sx={{width:'100vw',height:'100vh',display:'flex',flexDirection:'column', alignItems:'center'}}>
-        <Typography>Historia zakupów</Typography>
-        <TableContainer alignItems="center" sx={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'20px'}}>
+        <MainNavBar />
+        <CategoriesNavBar />
+        <Container sx={{width:'100vw',height:'100vh',display:'flex',flexDirection:'column', alignItems:'center',marginTop:'70px'}}>
+        <Typography sx={{fontFamily:'Montserrat', fontSize:'35px'}}>Historia zakupów</Typography>
+        <TableContainer alignItems="center" sx={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'50px'}}>
                     <TableHead>
                         <TableRow >
                         <TableCell sx={{width:'10vw'}}>Numer płatności</TableCell>

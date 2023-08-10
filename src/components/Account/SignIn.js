@@ -1,5 +1,5 @@
 import { Typography, Box, Container,TextField, Button, Alert} from "@mui/material"
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { currentUser } from "../../Context/currentUser";
@@ -11,13 +11,21 @@ const SignIn = () => {
         login:'',
         password:'',
     })
-    const [error,setError] = useState('');
-    const {formError, loginOrRegistration} = useSignUpOrSignIn();
-    
-    const [response, setResponse] = useState(null);
+    const [error,setError] = useState({
+      login:'',
+      pass:''
+    });
 
+    const {formError, isError, loginOrRegistration} = useSignUpOrSignIn();
     const navigate = useNavigate();
     const user = useContext(currentUser);
+
+  useEffect(()=>{
+    if(isError === false){
+      navigate('/');
+    }
+  },[isError])
+
 
     const updateField = (e) => {
         setForm({
@@ -29,45 +37,42 @@ const SignIn = () => {
 
       const validatorUser = () => {
         if(form.login.length === 0){
+          setError(previousState=>{return{...previousState, login:'Login jest wymagany'}})
           return 'Login jest wymagany'
         }else if(form.login.length < 4){
+          setError(previousState=>{return{...previousState,login: 'Login musi posiadać min. 4 znaków'}});
           return 'Login musi posiadać min. 4 znaków'
         }
         if(form.password.length === 0){
+          setError(previousState=>{return{...previousState, pass: 'Hasło jest wymagane'}});
          return 'Hasło jest wymagane'
         }else if(form.password.length < 5 ){
+          setError(previousState=>{return{...previousState, pass: 'Hasło musi posiadać min. 5 znaków'}});
           return 'Hasło musi posiadać min. 5 znaków'
         }
         return null
       }
-    
-    async function LogInUser(){ 
+
+      async function LogInUser(){ 
         console.log('Uruchomienie funkcji logowania');
-        const errorMsg = validatorUser();
+        setError({login:'',pass:''})
+        let errorMsg = validatorUser();
         if(errorMsg){
-            setError(errorMsg);
+          if(errorMsg === 'Login jest wymagany'){
             return
+          }else if(errorMsg = 'Login musi posiadać min. 4 znaków'){
+            return
+          }
+          if(errorMsg === 'Hasło jest wymagane'){
+            return
+          }else if(errorMsg === 'Hasło musi posiadać min. 5 znaków'){
+            return
+          }
         }
+        await loginOrRegistration('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCCUXA0GqA-e_jHQUUko5UaynHFNfYpOKg',form.login,form.password);
         setError('');
-        loginOrRegistration('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCCUXA0GqA-e_jHQUUko5UaynHFNfYpOKg',form.login,form.password);
-        /*try{
-            const res =  await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCCUXA0GqA-e_jHQUUko5UaynHFNfYpOKg', {
-            email: login,
-            password: password,
-            returnSecureToken: true
-           })
-           user.email = res.data.email;
-           user.password = password;
-           user.idUser = res.data.localId;
-           user.auth = true;
-           }catch(ex){
-            setResponse(ex.response.data.error.message);
-            if(response === 'INVALID_PASSWORD' || 'INVALID_EMAIL'){
-                setPassword('');
-                return
-              }
-           }*/    
-         navigate('/');
+        console.log('zaraz po async')
+        console.log(formError);  
     }
 
     const backtoHome = () => {
@@ -88,11 +93,12 @@ const SignIn = () => {
                 xs:'95vw'
             }, minHeight: '40vh', borderRadius: '20px', display: 'flex', flexDirection:'column', alignItems:'center', boxShadow: '-6px 5px 21px -7px rgba(8,8,8,1)'}}>
             <Typography sx={{ fontFamily: 'Montserrat', fontSize: '25px', marginBottom: '30px', marginTop:'20px'}}>Logowanie</Typography>
-            {error ? <TextField  error helperText={error} value={form.login} name='login' onChange={updateField} variant="outlined" label="Login" color="warning" sx={{width:'300px', marginBottom:'10px'}}></TextField> 
+            {error.login ? <TextField  error helperText={error.login} value={form.login} name='login' onChange={updateField} variant="outlined" label="Login" color="warning" sx={{width:'300px', marginBottom:'10px'}}></TextField> 
             : <TextField  value={form.login} name='login' onChange={updateField} variant="outlined" label="Login" color="warning" sx={{width:'300px', marginBottom:'10px'}}></TextField>}
-            {error ? <TextField type="password" error helperText={error} value={form.password} name="password" onChange={updateField} variant="outlined"  color="warning"   sx={{width:'300px', marginBottom:'30px'}}></TextField> 
+            {error.pass ? <TextField type="password" error helperText={error.pass} value={form.password} name="password" onChange={updateField} variant="outlined"  color="warning"   sx={{width:'300px', marginBottom:'30px'}}></TextField> 
             : <TextField type="password" value={form.password} name="password" onChange={updateField} variant="outlined"  color="warning" label="Hasło" sx={{width:'300px', marginBottom:'30px'}}></TextField>}
-             {response  ? <Alert severity="error"><Typography sx={{fontFamily:'Montserrat', fontSize:'15px', fontWeight:'bold'}}>Nieprawidłowe dane logowania!</Typography></Alert> : null }
+             {formError === 'INVALID_EMAIL'  ? <Alert severity="error"><Typography sx={{fontFamily:'Montserrat', fontSize:'15px', fontWeight:'bold'}}>Nieprawidłowy login</Typography></Alert> : null }
+             {formError === 'INVALID_PASSWORD'  ? <Alert severity="error"><Typography sx={{fontFamily:'Montserrat', fontSize:'15px', fontWeight:'bold'}}>Nieprawidłowe hasło</Typography></Alert> : null }
             <Button color="warning" variant="contained" disableElevation sx={{width: '250px', marginTop:'20px'}} onClick={LogInUser}>Zaloguj się</Button>
             <Typography sx={{marginTop: '10px'}}>Nie masz konta ?</Typography>
             <Button variant="outlined" color="error" sx={{marginTop: '10px'}} onClick={backtoRegister}>Załóż konto</Button>

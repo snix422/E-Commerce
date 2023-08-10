@@ -4,7 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 
 const HomeLogo = () => {
     return(
-        <IconButton size='large'>
+        <IconButton size='large' sx={{position:'absolute', left:'2%'}}>
             <Link to="/"><HomeIcon sx={{fontSize:'40px', color:'black'}} /></Link>
         </IconButton>
     )
