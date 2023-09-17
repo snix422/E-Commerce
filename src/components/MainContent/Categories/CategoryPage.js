@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Box, Container, Typography,FormGroup, FormControlLabel, Checkbox, InputBase, Rating, Button} from "@mui/material"
 import { useState, useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
@@ -29,6 +29,7 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
     const dataFromHook = data.length ? Object.values(data[0]) : [];
     let books = dataFromHook.filter(book => book.categories === categoryName);
     let {filteredBooks,filteringProducts} = useFilteredProducts(books);
+    const navigate = useNavigate();
 
     const searchProducts = () => {
         filteringProducts(priceOd,priceDo,producent,status);
@@ -144,7 +145,7 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
                 }):
                 books.map((product)=>{
                     return(
-                       <Box  className="product" sx={{display:'flex', flexDirection: 'column', alignItems:'center', border: '2px solid rgb(240, 238, 238)', width:{
+                       <Box className="product" onClick={()=>navigate('/product/' + product.id)} sx={{display:'flex', flexDirection: 'column', alignItems:'center', border: '2px solid rgb(240, 238, 238)', width:{
                            xl:'25vw',
                            lg:'25vw',
                            md:'40vw',

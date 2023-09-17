@@ -81,7 +81,7 @@ const MainNavBar = () => {
             sm:'15vh',
             xs:'17vh'
         },display: 'flex', flexDirection:'column', justifyContent:  'center', alignItems: 'center', width:'100%'}}>
-            <Box sx={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+            <Box sx={{display:'flex',justifyContent:'center', alignItems:'center', visibility: isMobileSearch ? 'hidden' : 'visibility'}}>
             <HomeLogo />
             <InputSearch searchProduct={searchProduct} />  
             <DetailsUser changeStateDrawerCart={setIsDrawerShopOpen} stateDrawerCart={isDrawerShopOpen} changeStateDrawerFav={setIsDrawerFavouriteOpen} stateDrawerFav={isDrawerFavouriteOpen} changeStateBurger={setIsDrawerBurger} stateBurger={isDrawerBurger} changeMobileSearch={toggleMobileSearch} isMobile={isMobileSearch} />
@@ -89,6 +89,7 @@ const MainNavBar = () => {
             <DrawerFavItems changeStateDrawerFav={setIsDrawerFavouriteOpen} stateDrawerFav={isDrawerFavouriteOpen} />
             <DrawerCategories stateBurger={isDrawerBurger} changeStateBurger={setIsDrawerBurger} />
             </Box>
+            
             {isMobileSearch && <MobileSearchBar stateBurger={isDrawerBurger} />}        
         </AppBar>
     )
