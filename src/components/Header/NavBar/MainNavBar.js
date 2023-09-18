@@ -90,7 +90,7 @@ const MainNavBar = () => {
             <DrawerCategories stateBurger={isDrawerBurger} changeStateBurger={setIsDrawerBurger} />
             </Box>
             
-            {isMobileSearch && <MobileSearchBar stateBurger={isDrawerBurger} />}        
+            {isMobileSearch && <MobileSearchBar stateBurger={isDrawerBurger} changedVisibility={setIsMobileSearch} />}        
         </AppBar>
     )
 }

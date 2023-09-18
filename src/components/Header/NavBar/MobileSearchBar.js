@@ -1,10 +1,32 @@
 import { Box, InputBase, Paper,IconButton } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from "react-router-dom";
+import useFetch from "../../../hooks/useFetch";
+import { useState } from "react";
 
-const MobileSearchBar = ({ stateBurger }) => {
+const MobileSearchBar = ({ stateBurger, changedVisibility }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const {data} = useFetch();
+  const dataFromHook = data.length ? Object.values(data[0]) : [];
+
+  const navigate = useNavigate();
+
+    const searchProduct = () => {
+     if(searchTerm.length === 0) {
+      navigate('/')
+     }else{
+      const item = dataFromHook.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      localStorage.removeItem('searchItem');
+      localStorage.setItem('searchItem', JSON.stringify(item));
+      navigate('/search');
+      setSearchTerm('');
+     }
+    }
     return ( 
         <Box sx = {
-            { width: '100vw', height: '15vh', display: 'flex', justifyContent: 'center', alignItems: 'center', position:'absolute', top:0,background:'white', zIndex:10 } } > 
+            { width: '100vw', height: '15vh', display: 'flex', justifyContent: 'center', alignItems: 'center', position:'relative', top:0,background:'white', zIndex:10} } > 
+       <ArrowBackIcon onClick={()=>changedVisibility(prev=>!prev)} sx={{position:'absolute', top:'-130%', left:'1%'}} />
         <Paper component={'form'} sx={{marginRight: {
             xl: '400px',
             lg: '300px',
@@ -17,8 +39,8 @@ const MobileSearchBar = ({ stateBurger }) => {
             md:'200px',
             sm:'80px',
             xs:'30px'
-          }, borderRadius: '25px', marginBottom:'5px', position:'relative', maxHeight:'40px', marginTop:'80px',}}>
-              <InputBase sx={{borderRadius: '50%',width: {
+          }, borderRadius: '25px', marginBottom:'5px', maxHeight:'40px', position:'absolute', top:'0', marginTop:'-30px'}}>
+              <InputBase onChange={(e)=>setSearchTerm(e.target.value)} value={searchTerm} sx={{borderRadius: '50%',width: {
                 xl:'550px',
                 lg:'400px',
                 md:'300px',
@@ -26,8 +48,8 @@ const MobileSearchBar = ({ stateBurger }) => {
                 xs:'250px'
               }, paddingLeft:'20px'}} placeholder='Search...' />
              
-              <IconButton sx={{position:'absolute', right:0}}>
-                  <SearchIcon />
+              <IconButton sx={{position:'relative'}}>
+                  <SearchIcon onClick={searchProduct} sx={{position:'absolute', top:'-20%', right:'20%'}} />
               </IconButton>
           </Paper>
         </Box>
