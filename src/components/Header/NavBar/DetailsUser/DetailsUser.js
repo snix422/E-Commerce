@@ -115,7 +115,7 @@ const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerC
                 xl: 'none',
                 lg: 'none',
                 md: 'none',
-                sm: 'none',
+                sm: 'block',
                 xs: 'block'
             }
         }

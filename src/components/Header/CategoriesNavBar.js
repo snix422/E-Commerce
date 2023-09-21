@@ -15,7 +15,7 @@ const CategoriesNavBar = () => {
             xl:'flex',
             lg:'flex',
             md:'flex',
-            sm:'flex',
+            sm:'none',
             xs:'none'
         }, justifyContent: 'center', alignItems: 'center', gap: '50px'}}>
             <Stack direction={'row'} sx={{gap: {

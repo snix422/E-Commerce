@@ -23,6 +23,7 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
         Polecane:false,
         Bestsellers:false,
     })
+    const [categoryNameToPolish, setCategoryNameToPolish] = useState('');
     const [products, setProducts] = useState([]);
     const {categoryName} = useParams();
     const {data} = useFetch();
@@ -30,6 +31,18 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
     let books = dataFromHook.filter(book => book.categories === categoryName);
     let {filteredBooks,filteringProducts} = useFilteredProducts(books);
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(categoryName === 'headphones' ){
+            setCategoryNameToPolish('Słuchawki');
+        }else if(categoryName === 'mouse'){
+            setCategoryNameToPolish('Myszki');
+        }else if(categoryName === 'mousepad'){
+            setCategoryNameToPolish('Podkładki');
+        }else if(categoryName === 'keyboard'){
+            setCategoryNameToPolish('Klawiatury');
+        }
+    },[])
 
     const searchProducts = () => {
         filteringProducts(priceOd,priceDo,producent,status);
@@ -42,7 +55,7 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
         <MainNavBar sx={{minWidth: '100%'}}/>
         <CategoriesNavBar />
         <Container sx={{minWidth: '100%', minHeight:'100vh', backgroundColor: 'rgb(240, 238, 238)'}}>
-            <Typography sx={{fontFamily: 'Montserrat', color:'black', fontSize:'30px', fontStyle:'italic', paddingTop:'30px', textAlign:'center'}}>{categoryName}</Typography>
+            <Typography sx={{fontFamily: 'Montserrat', color:'black', fontSize:'30px', paddingTop:'30px', textAlign:'center'}}>{categoryNameToPolish}</Typography>
             <Box sx={{display:'flex', flexDirection:{
                 xl:'row',
                 lg:'row',
@@ -52,9 +65,9 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
             }, alignItems:{
                 sm:'center',
                 xs:'center'
-            }}}>
-            <Box sx={{height:'75vh', width:{
-                xl:'25vw',
+            },}}>
+            <Box sx={{height:'65vh', width:{
+                xl:'35vw',
                 lg:'30vw',
                 md:'45vw',
                 sm:'75vw',
@@ -93,7 +106,7 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
                     </FormGroup>
                 </Box>
                 <Box sx={{display:'flex', justifyContent:'center', width:'100%'}}>
-                <Button variant="contained" color="secondary" sx={{marginBottom:'20px', textAlign:'center', width:'50%'}} onClick={()=>{searchProducts()}}>Szukaj</Button>
+                <Button variant="contained" color="secondary" sx={{textAlign:'center', width:'50%', marginBottom:'30px'}} onClick={()=>{searchProducts()}}>Szukaj</Button>
                 </Box>
             </Box>
             <Box sx={{width:{
@@ -103,8 +116,8 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
                 sm:'70vw',
                 xs:'75vw'
             }, minHeight:{
-                xl:'50vh',
-                lg:'50vh',
+                xl:'40vh',
+                lg:'40vh',
                 md:'50vh',
                 sm:'40vh',
                 xs:'30vh'
@@ -115,21 +128,27 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
                 sm:'center',
                 xs:'center'
             },alignItems:'center',
-            backgroundColor:'white', borderRadius:'10px', marginTop:'20px',marginBottom:'30px', display:'flex', gap:'20px', flexWrap:'wrap', marginLeft:'30px', marginTop:'50px', paddingTop:'20px', paddingBottom:'20px'}}>
+            backgroundColor:'white', borderRadius:'10px',marginBottom:'30px', display:'flex', flexDirection:{
+                xl:'row',
+                lg:'row',
+                md:'column',
+                sm:'column',
+                xs:'column'
+            }, gap:'20px', flexWrap:'wrap', marginLeft:'30px', marginTop:'50px', paddingTop:'20px', paddingBottom:'20px'}}>
                 {filteredBooks.length > 0 ? filteredBooks.map((product)=>{
                      return(
-                        <Box  className="product" sx={{display:'flex', flexDirection: 'column', alignItems:'center', border: '2px solid rgb(240, 238, 238)', width:{
+                        <Box  className="product" sx={{display:'flex', flexDirection: 'column', alignItems:'center', marginTop:'50px', border: '2px solid rgb(240, 238, 238)', width:{
                             xl:'25vw',
                             lg:'25vw',
                             md:'40vw',
                             sm:'50vw',
                             xs:'60vw'
                         }, height:{
-                            xl:'50vh',
-                            lg:'50vh',
+                            xl:'30vh',
+                            lg:'30vh',
                             md:'50vh',
-                            sm:'50vh',
-                            xs:'50vh'
+                            sm:'70vh',
+                            xs:'70vh'
                         }, borderRadius:'15px'}}>
                         <Link style={{textDecoration:'none', color:'black', display:' flex', flexDirection:'column', alignItems:'center'}} to={"product/" + product.id}>
                         <img className="product-img" style={{width: '200px', height: '200px'}} src={product.image}></img>
@@ -145,24 +164,24 @@ import CategoriesNavBar from "../../Header/CategoriesNavBar";
                 }):
                 books.map((product)=>{
                     return(
-                       <Box className="product" onClick={()=>navigate('/product/' + product.id)} sx={{display:'flex', flexDirection: 'column', alignItems:'center', border: '2px solid rgb(240, 238, 238)', width:{
+                       <Box className="product" onClick={()=>navigate('/product/' + product.id)} sx={{display:'flex', marginTop:'30px', flexDirection:'column',alignItems:'center', border: '2px solid rgb(240, 238, 238)', width:{
                            xl:'25vw',
                            lg:'25vw',
                            md:'40vw',
                            sm:'50vw',
                            xs:'60vw'
                        }, height:{
-                           xl:'50vh',
-                           lg:'50vh',
-                           md:'50vh',
-                           sm:'50vh',
-                           xs:'50vh'
+                           xl:'40vh',
+                           lg:'40vh',
+                           md:'45vh',
+                           sm:'45vh',
+                           xs:'45vh'
                        }, borderRadius:'15px'}}>
                        <Link style={{textDecoration:'none', color:'black', display:' flex', flexDirection:'column', alignItems:'center'}} to={"product/" + product.id}>
                        <img className="product-img" style={{width: '200px', height: '200px'}} src={product.image}></img>
-                       <Typography  sx={{paddingBottom: '10px'}}>{product.name}</Typography>
+                       <Typography  sx={{paddingBottom: '10px', fontSize:'17px', fontFamily:'Montserrat'}}>{product.name}</Typography>
                        <Rating name="read-only" value={5} readOnly></Rating>
-                       <Typography >{product.price} zł</Typography>
+                       <Typography sx={{fontSize:'17px', fontFamily:'Montserrat'}} >{product.price} zł</Typography>
                        <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'20px', marginBottom:'20px', marginTop:'10px'}}>
                        <AddShoppingCartIcon sx={{height:'40px', width:'100px'}} />
                        <FavoriteBorderIcon sx={{height:'40px', width:'100px'}} />

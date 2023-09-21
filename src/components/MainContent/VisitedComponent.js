@@ -24,7 +24,7 @@ const VisitedComponent = () => {
             sm:'90vw',
             xs:'95vw'
         }, minHeight: '40vh', backgroundColor:'white', borderRadius:'10px', marginTop:'10px', flexWrap: 'wrap'}}>
-            <Typography variant={'h4'} sx={{marginBottom:'20px', marginTop:'10px', fontFamily:'Montserrat', fontSize:'30px'}}>Rekomendowane kategoria dla Ciebie:</Typography>
+            <Typography variant={'h4'} sx={{marginBottom:'20px', marginTop:'10px', fontFamily:'Montserrat', fontSize:'30px'}}>Specjalnie dla Ciebie:</Typography>
             <Container sx={{display:'flex', justifyContent: 'center', gap:'20px', flexWrap: 'wrap'}}>
             { visitedProducts.length > 0 ? visitedProducts.map((product)=>{
                 return(
