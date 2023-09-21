@@ -16,8 +16,8 @@ const DrawerShoppingCart = ({stateDrawerCart,changeStateDrawerCart}) => {
           xl:'30vw',
           lg:'30vw',
           md:'40vw',
-          sm:'50vw',
-          xs:'60vw'
+          sm:'70vw',
+          xs:'100vw'
         }}}>
             <Box sx={{display:'flex', marginTop:'20px', marginLeft:'10px'}}>
               <ArrowBackIcon sx={{marginTop:'5px'}} onClick={()=>{changeStateDrawerCart(false)}}></ArrowBackIcon>

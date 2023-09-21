@@ -18,7 +18,9 @@ const MobileSearchBar = ({ stateBurger, changedVisibility }) => {
      }else{
       const item = dataFromHook.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase()));
       localStorage.removeItem('searchItem');
+      localStorage.removeItem('phrase');
       localStorage.setItem('searchItem', JSON.stringify(item));
+      localStorage.setItem('phrase', JSON.stringify(searchTerm));
       navigate('/search');
       setSearchTerm('');
      }

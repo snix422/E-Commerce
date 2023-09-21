@@ -32,15 +32,15 @@ const Footer = () => {
             }}}>
                 <Box sx={{display:'flex', flexDirection: 'column', gap: '20px', alignItems:'center'}}>
                     <Typography className={classes.linkStyle}>Produkty</Typography>
-                    <Link className={classes.linkStyle} to='/myszki'>Myszki</Link>
-                    <Link className={classes.linkStyle} to='/sluchawki'>Słuchawki</Link>
-                    <Link className={classes.linkStyle} to='/podkladki'>Podkładki</Link>
-                    <Link className={classes.linkStyle} to='/klawiatury' onClick={goToKlawiatury}>Klawiatury</Link>
+                    <Link className={classes.linkStyle} to='/category/myszki'>Myszki</Link>
+                    <Link className={classes.linkStyle} to='/category/sluchawki'>Słuchawki</Link>
+                    <Link className={classes.linkStyle} to='/category/podkladki'>Podkładki</Link>
+                    <Link className={classes.linkStyle} to='/category/klawiatury' onClick={goToKlawiatury}>Klawiatury</Link>
                 </Box>
                 <Box sx={{display:'flex', flexDirection: 'column', gap: '20px', alignItems:'center'}}>
                     <Typography className={classes.linkStyle}>Konto</Typography>
-                    <Link to='zaloguj' style={{textDecoration:'none'}}>Zaloguj się</Link>
-                    <Link to='rejestracja' style={{textDecoration:'none'}}>Zarejestruj się</Link>
+                    <Link to='signin' style={{textDecoration:'none', width:'150%', fontSize:'20px'}}>Zaloguj się</Link>
+                    <Link to='signup' style={{textDecoration:'none', width:'150%', fontSize:'20px'}}>Zarejestruj się</Link>
                 </Box>
                 <Box sx={{display:'flex', flexDirection: 'column', gap:'20px'}}>
                     <Typography className={classes.linkStyle} sx={{textAlign:'center'}}>Kontakt</Typography>
