@@ -1,18 +1,19 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CartContext = createContext();
 
 
 export function CartProvider({ children }) {
-    
 
-   
+
+
     const localCart = JSON.parse(localStorage.getItem('totalItems'));
     const sumPrice = localCart ? Number(localStorage.getItem('totalPrice')) : 0;
     const localFav = JSON.parse(localStorage.getItem('favItems'));
-    
-    const [items, setItems] = useState(localCart ? localCart: []);
+
+    const [items, setItems] = useState(localCart ? localCart : []);
     const [totalPrice, setTotalPrice] = useState(sumPrice);
     const [favItems, setFavItems] = useState(localFav ? localFav : [])
 
@@ -24,11 +25,12 @@ export function CartProvider({ children }) {
             existingItem.quantity++;
 
         } else {
-            setItems([...items, { id: id, name: name, price: price,image:image, quantity: 1 }]);
+            setItems([...items, { id: id, name: name, price: price, image: image, quantity: 1 }]);
 
         }
 
-        setTotalPrice(Number(totalPrice) + Number(price))
+        setTotalPrice(Number(totalPrice) + Number(price));
+        toast.success('Dodałeś produkt do koszyka');
     }
 
     const removeFromCart = (id) => {
@@ -38,12 +40,12 @@ export function CartProvider({ children }) {
             const reducedCart = items.filter((item) => item.id !== id);
             console.log(reducedCart);
             setItems(reducedCart);
-
         } else {
             existingItem.quantity--;
         }
 
-        setTotalPrice(Number(totalPrice) - Number(existingItem.price))
+        setTotalPrice(Number(totalPrice) - Number(existingItem.price));
+        toast.error('Usunąłeś produkt z koszyka')
     }
 
     const removeAllItemsCart = () => {
@@ -54,20 +56,22 @@ export function CartProvider({ children }) {
     const addToFav = (id, name, price, image) => {
         const existingItem = favItems.find((item) => item.id === id);
         if (!existingItem) {
-            setFavItems([...favItems, { id: id, name: name, price: price,image:image}])
-        } 
+            setFavItems([...favItems, { id: id, name: name, price: price, image: image }])
+        }
+        toast.success('Produkt dodany do ulubionych');
     }
 
     const removeFav = (id) => {
         const reducedCart = favItems.filter((item) => item.id !== id);
         console.log(reducedCart);
-        setFavItems(reducedCart);  
+        setFavItems(reducedCart);
+        toast.error('Usunąłeś produkt z ulubionych');
     }
 
 
     return ( 
-        <CartContext.Provider value = {
-            { items, totalPrice, addToCart, removeFromCart, removeAllItemsCart, favItems, addToFav, removeFav } } > { children } 
+        <CartContext.Provider value = {{ items, totalPrice, addToCart, removeFromCart, removeAllItemsCart, favItems, addToFav, removeFav }}> 
+        {children} 
         </CartContext.Provider>
     )
 }

@@ -72,7 +72,6 @@ const ProductComments = (props) => {
             return(
             <Box sx={{display:'flex', flexDirection:'column', gap:'10px', marginTop:'50px'}}><Box sx={{display:'flex', gap: '10px'}}><AccountCircleIcon></AccountCircleIcon><Typography sx={{fontFamily:'Montserrat', fontWeight:'bold'}}>{comm.userEmail}</Typography></Box><Typography sx={{fontFamily:'Montserrat'}}>{comm.opinion}</Typography><hr></hr></Box>)
           }): null}
-          <ToastContainer />
           </Container>
         
     )

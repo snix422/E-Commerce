@@ -10,6 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import './DetailsUser.css'
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
+import { toast } from "react-toastify";
 
 
 const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerCart, stateDrawerFav, changeMobileSearch, isMobile, changeStateBurger, stateBurger }) => {
@@ -38,6 +39,8 @@ const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerC
         user.auth = false;
         user.email = "";
         user.password = '';
+        toast.info('Zostałeś wylogowany');
+        handleClose();
     }
     return ( 
         <Stack direction = {'row'} sx = {{ position: 'absolute', right: '2%' }}> 

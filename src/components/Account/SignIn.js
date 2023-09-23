@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { currentUser } from "../../Context/currentUser";
 import useSignUpOrSignIn from "../../hooks/useSignUpOrSignIn";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn = () => {
 
@@ -22,7 +24,10 @@ const SignIn = () => {
 
   useEffect(()=>{
     if(isError === false){
-      navigate('/');
+      toast.success('Zostałeś wylogowany');
+      setTimeout(()=>{
+        navigate('/');
+      },1000)
     }
   },[isError])
 
@@ -70,9 +75,10 @@ const SignIn = () => {
           }
         }
         await loginOrRegistration('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCCUXA0GqA-e_jHQUUko5UaynHFNfYpOKg',form.login,form.password);
+      
         setError('');
         console.log('zaraz po async')
-        console.log(formError);  
+        console.log(formError); 
     }
 
     const backtoHome = () => {
@@ -106,6 +112,7 @@ const SignIn = () => {
                 Wróć
             </Button>
             </Box>
+            <ToastContainer />
         </Container>
     )
 }

@@ -9,6 +9,9 @@ import ProductComments from "./Categories/ProductComments";
 import CartContext from "../../Context/CartContext";
 import useFetch from "../../hooks/useFetch";
 import CategoriesNavBar from "../Header/CategoriesNavBar";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const ProductPage = () => {
     const [value, setValue] = useState('Opis');
@@ -123,7 +126,7 @@ const ProductPage = () => {
                 </Box>
                 )
             }) : null}
-            
+            <ToastContainer />
         </Container>
 
         </>
