@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -13,11 +13,13 @@ export function CartProvider({ children }) {
     const sumPrice = localCart ? Number(localStorage.getItem('totalPrice')) : 0;
     const localFav = JSON.parse(localStorage.getItem('favItems'));
 
+    
+
     const [items, setItems] = useState(localCart ? localCart : []);
     const [totalPrice, setTotalPrice] = useState(sumPrice);
     const [favItems, setFavItems] = useState(localFav ? localFav : [])
 
-    localStorage.removeItem('totalItems');
+    //localStorage.removeItem('totalItems');
 
     const addToCart = (id, name, price, image) => {
         const existingItem = items.find((item) => item.id === id);
@@ -31,6 +33,8 @@ export function CartProvider({ children }) {
 
         setTotalPrice(Number(totalPrice) + Number(price));
         toast.success('Dodałeś produkt do koszyka');
+        localStorage.removeItem('totalItems')
+        localStorage.setItem('totalItems');
     }
 
     const removeFromCart = (id) => {
@@ -59,6 +63,7 @@ export function CartProvider({ children }) {
             setFavItems([...favItems, { id: id, name: name, price: price, image: image }])
         }
         toast.success('Produkt dodany do ulubionych');
+        
     }
 
     const removeFav = (id) => {

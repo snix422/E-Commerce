@@ -46,8 +46,10 @@ const PaymentHistory = () => {
                     <TableHead>
                         <TableRow >
                         <TableCell sx={{width:'10vw'}}>Numer płatności</TableCell>
+                        <TableCell sx={{width:'10vw'}}>Data zakupu</TableCell>
                         <TableCell sx={{width:'10vw'}}>Nazwa przedmiotu</TableCell>
                         <TableCell sx={{width:'10vw'}}>Cena przedmiotu</TableCell>
+                        <TableCell sx={{width:'10vw'}}>Ilość</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
@@ -63,6 +65,7 @@ const PaymentHistory = () => {
                                 sm:'15vw',
                                 xs:'20vw'
                             }}}>{item.idOrder}</TableCell>
+                            <TableCell sx={{width:'10vw'}}>{item.date}</TableCell>
                             {item.content ? item.content.map((content)=>{
                                 console.log(content)
                                 return(
@@ -79,6 +82,12 @@ const PaymentHistory = () => {
                                 md:'10vw',
                                 sm:'15vw',
                                 xs:'20vw'}}}>{content.price}</TableCell>
+                                <TableCell sx={{width:{
+                                xl:'10vw',
+                                lg:'10vw',
+                                md:'10vw',
+                                sm:'15vw',
+                                xs:'20vw'}}}>{content.quantity}</TableCell>
                                     </>
                                 )
                             }):null}

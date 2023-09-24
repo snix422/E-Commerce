@@ -9,17 +9,26 @@ const AcceptBuy = () => {
     const user = useContext(currentUser);
     const {items} = useContext(CartContext)
     const navigate = useNavigate();
+    console.log(items);
+    const myItems = JSON.parse(localStorage.getItem('totalItems'));
+    console.log(myItems);
 
     async function buyProduct() {
         navigate('/orderproduct');
-        const day = new Date();
+        const months = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień','Maj',
+                        'Czewiec','Lipiec','Sierpień','Wrzesień','Październik',
+                        'Listopad','Grudzień'];
+        const date = new Date();
+        const day = date.getUTCDate();
+        const year = date.getFullYear();
+        const month = months[date.getUTCMonth()];
+        const myDate = `${day} ${month} ${year}`;
         try{
             const res =  await axios.post('https://gamingshop-4b668-default-rtdb.europe-west1.firebasedatabase.app/Orders.json', {
             idUser: user.idUser,
             idOrder: Math.floor(Math.random()*10000+1),
-            content: items,
-            paymentDay:day.getDay(),
-            paymentMonth:day.getMonth()
+            content: myItems,
+            date: myDate
            })
            }catch(ex){
            }
