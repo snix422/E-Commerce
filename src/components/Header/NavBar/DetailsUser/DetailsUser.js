@@ -11,6 +11,7 @@ import './DetailsUser.css'
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { toast } from "react-toastify";
+import useAccount from "../../../../hooks/useAccount";
 
 
 const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerCart, stateDrawerFav, changeMobileSearch, isMobile, changeStateBurger, stateBurger }) => {
@@ -18,8 +19,14 @@ const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerC
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
     const [isActive, setIsActive] = useState('noactive');
-    const user = useContext(currentUser);
+    //const user = useContext(currentUser);
     const { items, favItems, } = useContext(CartContext);
+    const {LogOutUser} = useAccount();
+
+   
+
+    const currentUser = JSON.parse(localStorage.getItem('loggedUser'));
+    console.log(currentUser);
 
 
     const handleClose = () => {
@@ -36,11 +43,12 @@ const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerC
     }, [])
 
     const logOut = () => {
-        user.auth = false;
+        /*user.auth = false;
         user.email = "";
-        user.password = '';
+        user.password = '';*/
         toast.info('Zostałeś wylogowany');
         handleClose();
+        LogOutUser();
     }
     return ( 
         <Stack direction = {'row'} sx = {{ position: 'absolute', right: '2%' }}> 
@@ -66,7 +74,7 @@ const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerC
     </Box>} 
     <IconButton size='large' sx={{ display: 'flex', flexDirection: 'column' }}>
     <AccountBoxIcon onClick = {handleClick} fontSize = '200px' /> 
-    {user.auth == true ? <Box> <Typography sx = {
+    {currentUser ? <Box> <Typography sx = {
         {
             fontFamily: 'Montserrat',
             display: {
@@ -77,7 +85,7 @@ const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerC
                 xs: 'none'
             }
         }
-    }> { user.email } </Typography>
+    }> { currentUser?.email } </Typography>
     <Menu
     anchorEl = { anchorEl }
     id = "basic-menu"

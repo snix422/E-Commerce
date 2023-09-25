@@ -6,6 +6,7 @@ import { currentUser } from "../../Context/currentUser";
 import useSignUpOrSignIn from "../../hooks/useSignUpOrSignIn";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import useAccount from "../../hooks/useAccount";
 
 const SignIn = () => {
 
@@ -21,6 +22,8 @@ const SignIn = () => {
     const {formError, isError, loginOrRegistration} = useSignUpOrSignIn();
     const navigate = useNavigate();
     const user = useContext(currentUser);
+
+    const {LogIn, LogOut} = useAccount;
 
   useEffect(()=>{
     if(isError === false){
@@ -78,7 +81,7 @@ const SignIn = () => {
       
         setError('');
         console.log('zaraz po async')
-        console.log(formError); 
+        console.log(formError);
     }
 
     const backtoHome = () => {

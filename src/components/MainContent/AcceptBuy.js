@@ -12,6 +12,7 @@ const AcceptBuy = () => {
     console.log(items);
     const myItems = JSON.parse(localStorage.getItem('totalItems'));
     console.log(myItems);
+    const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 
     async function buyProduct() {
         navigate('/orderproduct');
@@ -23,15 +24,20 @@ const AcceptBuy = () => {
         const year = date.getFullYear();
         const month = months[date.getUTCMonth()];
         const myDate = `${day} ${month} ${year}`;
-        try{
-            const res =  await axios.post('https://gamingshop-4b668-default-rtdb.europe-west1.firebasedatabase.app/Orders.json', {
-            idUser: user.idUser,
-            idOrder: Math.floor(Math.random()*10000+1),
-            content: myItems,
-            date: myDate
-           })
-           }catch(ex){
-           }
+
+        for(const value of myItems){
+            try{
+                const res =  await axios.post('https://gamingshop-4b668-default-rtdb.europe-west1.firebasedatabase.app/Orders.json', {
+                idUser: loggedUser.id,
+                idOrder: Math.floor(Math.random()*10000+1),
+                content: value,
+                date: myDate
+               })
+               }catch(ex){
+                console.log(ex);
+               }
+        }
+      
     }
 
     return(

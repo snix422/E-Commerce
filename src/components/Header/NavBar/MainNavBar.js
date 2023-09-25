@@ -24,6 +24,7 @@ const MainNavBar = () => {
     const [isMobileSearch, setIsMobileSearch] = useState(false);
  
     const {items, totalPrice,favItems,} = useContext(CartContext);
+    console.log(JSON.parse(localStorage.getItem('currentUser')));
     
     if(items){
       localStorage.setItem('totalPrice', Number(totalPrice));

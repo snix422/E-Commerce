@@ -2,12 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { currentUser } from "../Context/currentUser";
 import { toast } from 'react-toastify'
+import useAccount from "./useAccount";
 
 const useSignUpOrSignIn = () => {
 
     const [formError, setFormError] = useState(null);
     const [isError, setIsError] = useState(null);
     const user = useContext(currentUser);
+    const { LogInUser, LogOutUser } = useAccount();
 
 
     async function loginOrRegistration(apiUrl, username, password, response) {
@@ -21,6 +23,13 @@ const useSignUpOrSignIn = () => {
             user.auth = true;
             user.email = password;
             user.email = username;
+            const newUser = {
+                auth: true,
+                email: username,
+                password: password,
+                id: res.data.localId
+            }
+            LogInUser(newUser);
         } catch (ex) {
             setFormError(ex.response.data.error.message);
             setIsError(true);
