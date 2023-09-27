@@ -7,7 +7,7 @@ import MainNavBar from "../../Header/NavBar/MainNavBar";
 import useFilteredProducts from "../../../hooks/useFilteredProducts";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import CategoriesNavBar from "../../Header/CategoriesNavBar";
+import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
 
 
  const CategoryPage = () => {

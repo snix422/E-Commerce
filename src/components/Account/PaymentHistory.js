@@ -1,11 +1,8 @@
-
-import { useContext } from "react";
-import { currentUser } from "../../Context/currentUser";
 import { Container, Typography, TableContainer, TableHead, TableBody, TableCell, TableRow, useStepContext } from "@mui/material"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import MainNavBar from "../Header/NavBar/MainNavBar";
-import CategoriesNavBar from "../Header/CategoriesNavBar";
+import CategoriesNavBar from "../Header/NavBar/CategoriesNavBar";
 import useFetch from "../../hooks/useFetch";
 import useFetchOrders from "../../hooks/useFetchOrders";
 
@@ -15,7 +12,7 @@ const PaymentHistory = () => {
     const [myProducts, setMyProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
 
-    //const user = useContext(currentUser);
+   
     const currentUser = JSON.parse(localStorage.getItem('loggedUser'));
     console.log(currentUser);
 

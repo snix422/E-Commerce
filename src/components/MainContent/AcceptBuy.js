@@ -1,12 +1,11 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom"
-import { currentUser } from "../../Context/currentUser";
 import CartContext from "../../Context/CartContext";
 import axios from 'axios'
 
 const AcceptBuy = () => {
 
-    const user = useContext(currentUser);
+    
     const {items} = useContext(CartContext)
     const navigate = useNavigate();
     console.log(items);
@@ -28,7 +27,7 @@ const AcceptBuy = () => {
         for(const value of myItems){
             try{
                 const res =  await axios.post('https://gamingshop-4b668-default-rtdb.europe-west1.firebasedatabase.app/Orders.json', {
-                idUser: loggedUser.id,
+                idProduct: value.id,
                 idOrder: Math.floor(Math.random()*10000+1),
                 content: value,
                 date: myDate

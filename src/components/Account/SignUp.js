@@ -2,7 +2,6 @@ import { Typography, Box, Container, TextField, Button, Alert } from "@mui/mater
 import { useContext, useState, useEffect } from "react";
 import {  useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { registerUsers } from "../../Context/registerUsers";
 import useSignUpOrSignIn from "../../hooks/useSignUpOrSignIn";
 
 
@@ -20,8 +19,7 @@ const SignUp =  () => {
     const {formError, isError, loginOrRegistration} = useSignUpOrSignIn();
 
     const navigate = useNavigate();
-    const registers = useContext(registerUsers);
-
+ 
     useEffect(()=>{
         if(isError === false){
           navigate('/');

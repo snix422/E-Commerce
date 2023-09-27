@@ -1,14 +1,12 @@
 import { Container, Typography,Box, Button, BottomNavigation, BottomNavigationAction, } from "@mui/material"
 import {useState,useEffect, useContext} from 'react'
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import MainNavBar from "../Header/NavBar/MainNavBar";
-import { ShoppingCart } from "../../Context/ShoppingCart";
-import TableSpecification from "./Categories/TableSpecification";
-import ProductComments from "./Categories/ProductComments";
+import ProductComments from "../ProductItem/ProductComments";
+import TableSpecification from "../ProductItem/TableSpecification";
 import CartContext from "../../Context/CartContext";
 import useFetch from "../../hooks/useFetch";
-import CategoriesNavBar from "../Header/CategoriesNavBar";
+import CategoriesNavBar from "../Header/NavBar/CategoriesNavBar";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 

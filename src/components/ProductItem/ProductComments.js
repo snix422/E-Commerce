@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react"
-import {currentUser} from '../../../Context/currentUser';
 import { Button, Container, TextField, Typography, Box } from "@mui/material";
 import axios from "axios";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -12,7 +11,7 @@ const ProductComments = (props) => {
     const [comments, setComments] = useState([]);
     const [isAddComment, setIsAddComment] = useState(0);
 
-    const user = useContext(currentUser);
+    const user = localStorage.getItem('loggedUser');
    
     async function fetch(){
         const res = await axios.get(`https://gamingshop-4b668-default-rtdb.europe-west1.firebasedatabase.app/ProductsComment.json`)
@@ -58,7 +57,7 @@ const ProductComments = (props) => {
     
 
     return(
-        <Container sx={{marginBottom:'50px', marginTop:'30px'}}>{user.auth === true ?  <Box sx={{display:'flex', flexDirection:'column', alignItems:'center'}}><TextField
+        <Container sx={{marginBottom:'50px', marginTop:'30px'}}>{user !== null ?  <Box sx={{display:'flex', flexDirection:'column', alignItems:'center'}}><TextField
             id="outlined-multiline-flexible"
             label="Wpisz swój komentarz"
             multiline

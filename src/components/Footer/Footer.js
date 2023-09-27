@@ -36,19 +36,19 @@ const Footer = () => {
                 sm:'40px',
                 xs:'20px'
             }}}>
-                <Box sx={{display:'flex', flexDirection: 'column', gap: '20px', alignItems:'center', border:'2px solid red'}}>
+                <Box sx={{display:'flex', flexDirection: 'column', gap: '20px', alignItems:'center'}}>
                     <Typography className={classes.linkStyle}>Produkty</Typography>
                     <Link className={classes.linkStyle} to='/category/myszki'>Myszki</Link>
                     <Link className={classes.linkStyle} to='/category/sluchawki'>Słuchawki</Link>
                     <Link className={classes.linkStyle} to='/category/podkladki'>Podkładki</Link>
                     <Link className={classes.linkStyle} to='/category/klawiatury' onClick={goToKlawiatury}>Klawiatury</Link>
                 </Box>
-                <Box sx={{display:'flex', flexDirection: 'column', gap: '20px', alignItems:'center', border:'2px solid red', minWidth:'100px'}}>
+                <Box sx={{display:'flex', flexDirection: 'column', gap: '20px', alignItems:'center', minWidth:'100px'}}>
                     <Typography className={classes.linkStyle}>Konto</Typography>
                     <Link to='signin' style={{textDecoration:'none', fontSize:'20px'}}>Zaloguj się</Link>
                     <Link to='signup' style={{textDecoration:'none', fontSize:'20px'}}>Zarejestruj się</Link>
                 </Box>
-                <Box sx={{display:'flex', flexDirection: 'column', gap:'20px', border:'2px solid red'}}>
+                <Box sx={{display:'flex', flexDirection: 'column', gap:'20px'}}>
                     <Typography className={classes.linkStyle} sx={{textAlign:'center'}}>Kontakt</Typography>
                     <Box sx={{display: 'flex' ,  justifyContent:'center', alignItems: 'center'}}>
                         <IconButton>

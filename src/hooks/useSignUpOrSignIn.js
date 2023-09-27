@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { currentUser } from "../Context/currentUser";
 import { toast } from 'react-toastify'
 import useAccount from "./useAccount";
 
@@ -8,7 +7,6 @@ const useSignUpOrSignIn = () => {
 
     const [formError, setFormError] = useState(null);
     const [isError, setIsError] = useState(null);
-    const user = useContext(currentUser);
     const { LogInUser, LogOutUser } = useAccount();
 
 
@@ -20,9 +18,6 @@ const useSignUpOrSignIn = () => {
             console.log('jest okej');
             setIsError(false);
             console.log(res);
-            user.auth = true;
-            user.email = password;
-            user.email = username;
             const newUser = {
                 auth: true,
                 email: username,

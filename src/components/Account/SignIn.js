@@ -2,7 +2,6 @@ import { Typography, Box, Container,TextField, Button, Alert} from "@mui/materia
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { currentUser } from "../../Context/currentUser";
 import useSignUpOrSignIn from "../../hooks/useSignUpOrSignIn";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,8 +20,6 @@ const SignIn = () => {
 
     const {formError, isError, loginOrRegistration} = useSignUpOrSignIn();
     const navigate = useNavigate();
-    const user = useContext(currentUser);
-
     const {LogIn, LogOut} = useAccount;
 
   useEffect(()=>{

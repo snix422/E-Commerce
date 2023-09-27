@@ -1,7 +1,6 @@
 import  { AppBar, Box,} from '@mui/material';
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { currentUser } from '../../../Context/currentUser';
 import CartContext from '../../../Context/CartContext';
 import axios from 'axios'
 import HomeLogo from './HomeLogo';
@@ -36,8 +35,7 @@ const MainNavBar = () => {
     }
    
     const navigate = useNavigate();
-    const user = useContext(currentUser);
-   
+ 
     async function fetch(){
       const res = await axios.get(`https://gamingshop-4b668-default-rtdb.europe-west1.firebasedatabase.app/Products.json`)
         setProducts([res.data]);

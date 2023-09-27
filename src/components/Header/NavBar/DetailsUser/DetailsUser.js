@@ -1,7 +1,6 @@
 import { Stack, IconButton, Box, Typography, MenuItem, Badge, Menu, InputBase } from "@mui/material"
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { useState, useContext, useEffect } from "react";
-import { currentUser } from "../../../../Context/currentUser";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartContext from "../../../../Context/CartContext";
@@ -19,7 +18,6 @@ const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerC
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
     const [isActive, setIsActive] = useState('noactive');
-    //const user = useContext(currentUser);
     const { items, favItems, } = useContext(CartContext);
     const {LogOutUser} = useAccount();
 

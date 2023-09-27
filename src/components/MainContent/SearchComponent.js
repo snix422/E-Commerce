@@ -1,7 +1,7 @@
 import { Typography, Box,Rating, useScrollTrigger } from "@mui/material"
 import { Link} from "react-router-dom";
 import MainNavBar from "../Header/NavBar/MainNavBar";
-import CategoriesNavBar from "../Header/CategoriesNavBar";
+import CategoriesNavBar from "../Header/NavBar/CategoriesNavBar";
 import Footer from "../Footer/Footer";
 import ProductPage from "./ProductPage";
 import { useEffect, useState } from "react";
