@@ -54,8 +54,6 @@ const ProductComments = (props) => {
         }
     }
 
-    
-
     return(
         <Container sx={{marginBottom:'50px', marginTop:'30px'}}>{user !== null ?  <Box sx={{display:'flex', flexDirection:'column', alignItems:'center'}}><TextField
             id="outlined-multiline-flexible"
