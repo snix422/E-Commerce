@@ -24,14 +24,17 @@ import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
         Bestsellers:false,
     })
     const [categoryNameToPolish, setCategoryNameToPolish] = useState('');
-    const [products, setProducts] = useState([]);
+    const [filteredBooks, setFilteredBooks] = useState([]);
+    const [statusFilters, setStatusFilters] = useState(false);
+    
     const {categoryName} = useParams();
     const {data} = useFetch();
     const dataFromHook = data.length ? Object.values(data[0]) : [];
     let books = dataFromHook.filter(book => book.categories === categoryName);
-    let {filteredBooks,filteringProducts} = useFilteredProducts(books);
+    //let {filteredBooks,filteringProducts} = useFilteredProducts();
     const navigate = useNavigate();
-
+    console.log(filteredBooks);
+    
     useEffect(()=>{
         if(categoryName === 'headphones' ){
             setCategoryNameToPolish('Słuchawki');
@@ -44,11 +47,64 @@ import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
         }
     },[])
 
+
+
+
     const searchProducts = () => {
-        filteringProducts(priceOd,priceDo,producent,status);
+        /*filteringProducts(priceOd,priceDo,producent,status,books);*/
+
+        const companies = [
+            producent.Stealseries && 'Stealseries',
+            producent.HyperX && 'HyperX',
+            producent.Razer && 'Razer'
+        ].filter(Boolean);
+
+        const productStatuses = [
+            status.Promocje && 'promocje',
+            status.Polecane && 'polecane',
+            status.Bestsellers && 'bestsellers'
+        ].filter(Boolean);
+
+
+        const filtered = books.filter((product) =>
+            (companies.length ? companies.includes(product.company) : true) &&
+            (productStatuses.length ? productStatuses.some((status) => product[status]) : true) &&
+            (priceOd ? product.price > priceOd : true) &&
+            (priceDo ? product.price < priceDo : true))
+        setFilteredBooks(filtered);
+        console.log(filtered);
         setPriceOd('');
         setPriceDo('');
+        setStatusFilters(true);
     }
+
+    const optionalRendering = filteredBooks.length > 0 ?  filteredBooks.map((product)=>{
+        return(
+           <Box  className="product" sx={{display:'flex', flexDirection: 'column', alignItems:'center', marginTop:'50px', border: '2px solid rgb(240, 238, 238)', width:{
+               xl:'25vw',
+               lg:'25vw',
+               md:'40vw',
+               sm:'50vw',
+               xs:'60vw'
+           }, minHeight:{
+               xl:'40vh',
+               lg:'40vh',
+               md:'50vh',
+               sm:'30vh',
+               xs:'30vh'
+           }, borderRadius:'15px'}}>
+           <Link style={{textDecoration:'none', color:'black', display:' flex', flexDirection:'column', alignItems:'center'}} to={"product/" + product.id}>
+           <img className="product-img" style={{width: '200px', height: '200px'}} src={product.image}></img>
+           <Typography  sx={{paddingBottom: '10px'}}>{product.name}</Typography>
+           <Rating name="read-only" value={5} readOnly></Rating>
+           <Typography >{product.price} zł</Typography>
+           <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'20px', marginBottom:'20px', marginTop:'10px'}}>
+           <AddShoppingCartIcon sx={{height:'40px', width:'100px'}} />
+           <FavoriteBorderIcon sx={{height:'40px', width:'100px'}} />
+        </Box>
+           </Link>
+       </Box>)
+   }) : <Typography>Brak wyników</Typography>
 
     return(
         <>
@@ -66,7 +122,7 @@ import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
                 sm:'center',
                 xs:'center'
             },}}>
-            <Box sx={{height:'65vh', width:{
+            <Box sx={{minHeight:'65vh', width:{
                 xl:'35vw',
                 lg:'30vw',
                 md:'45vw',
@@ -135,7 +191,7 @@ import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
                 sm:'column',
                 xs:'column'
             }, gap:'20px', flexWrap:'wrap', marginLeft:'30px', marginTop:'50px', paddingTop:'20px', paddingBottom:'20px'}}>
-                {filteredBooks.length > 0 ? filteredBooks.map((product)=>{
+                { statusFilters === false ? books.map((product)=>{
                      return(
                         <Box  className="product" sx={{display:'flex', flexDirection: 'column', alignItems:'center', marginTop:'50px', border: '2px solid rgb(240, 238, 238)', width:{
                             xl:'25vw',
@@ -143,12 +199,12 @@ import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
                             md:'40vw',
                             sm:'50vw',
                             xs:'60vw'
-                        }, height:{
-                            xl:'30vh',
-                            lg:'30vh',
+                        }, minHeight:{
+                            xl:'40vh',
+                            lg:'40vh',
                             md:'50vh',
-                            sm:'70vh',
-                            xs:'70vh'
+                            sm:'30vh',
+                            xs:'30vh'
                         }, borderRadius:'15px'}}>
                         <Link style={{textDecoration:'none', color:'black', display:' flex', flexDirection:'column', alignItems:'center'}} to={"product/" + product.id}>
                         <img className="product-img" style={{width: '200px', height: '200px'}} src={product.image}></img>
@@ -161,35 +217,7 @@ import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
                      </Box>
                         </Link>
                     </Box>)
-                }):
-                books.map((product)=>{
-                    return(
-                       <Box className="product" onClick={()=>navigate('/product/' + product.id)} sx={{display:'flex', marginTop:'30px', flexDirection:'column',alignItems:'center', border: '2px solid rgb(240, 238, 238)', width:{
-                           xl:'25vw',
-                           lg:'25vw',
-                           md:'40vw',
-                           sm:'50vw',
-                           xs:'60vw'
-                       }, height:{
-                           xl:'40vh',
-                           lg:'40vh',
-                           md:'45vh',
-                           sm:'45vh',
-                           xs:'45vh'
-                       }, borderRadius:'15px'}}>
-                       <Link style={{textDecoration:'none', color:'black', display:' flex', flexDirection:'column', alignItems:'center'}} to={"product/" + product.id}>
-                       <img className="product-img" style={{width: '200px', height: '200px'}} src={product.image}></img>
-                       <Typography  sx={{paddingBottom: '10px', fontSize:'17px', fontFamily:'Montserrat'}}>{product.name}</Typography>
-                       <Rating name="read-only" value={5} readOnly></Rating>
-                       <Typography sx={{fontSize:'17px', fontFamily:'Montserrat'}} >{product.price} zł</Typography>
-                       <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'20px', marginBottom:'20px', marginTop:'10px'}}>
-                       <AddShoppingCartIcon sx={{height:'40px', width:'100px'}} />
-                       <FavoriteBorderIcon sx={{height:'40px', width:'100px'}} />
-                    </Box>
-                       </Link>
-                   </Box>)
-               })
-                }
+                }) : optionalRendering} 
             </Box>
             </Box>
 

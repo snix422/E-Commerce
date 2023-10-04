@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import useFetch from "./useFetch";
 import { useParams } from "react-router-dom";
 
-const useFilteredProducts = (products) => {
+const useFilteredProducts = () => {
+
 
     const [filteredBooks, setFilteredBooks] = useState([]);
+    const [categoryProducts, setCategoryProducts] = useState([]);
+
+    /*const { data } = useFetch();
+    const dataFromHook = data.length ? Object.values(data[0]) : [];*/
+
 
     const [status, setStatus] = useState({
         Promocje: false,
@@ -18,15 +24,17 @@ const useFilteredProducts = (products) => {
         Razer: false
     })
 
-    const filteringProducts = (priceMin, priceMax, prodStatus, status) => {
-        console.log(priceMin, priceMax, prodStatus, status);
+    const filteringProducts = (priceMin, priceMax, prodStatus, status, products) => {
+        console.log(prodStatus);
+        console.log(status);
+        console.log(products);
         setStatus(status);
         setProducent(prodStatus);
 
         const companies = [
-            producent.Stealseries && 'Steelseries',
-            producent.HyperX && 'HyperX',
-            producent.Razer && 'Razer'
+            prodStatus.Stealseries && 'Stealseries',
+            prodStatus.HyperX && 'HyperX',
+            prodStatus.Razer && 'Razer'
         ].filter(Boolean);
 
         const productStatuses = [

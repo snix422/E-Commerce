@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
+import useSearchParams from "../../../hooks/useSearchParams";
 
 
 const InputSearch = () => {
@@ -13,9 +14,10 @@ const InputSearch = () => {
     const dataFromHook = data.length ? Object.values(data[0]) : [];
     
     const navigate = useNavigate();
+    const {searchProduct2} = useSearchParams();
 
     const searchProduct = () => {
-     if(searchTerm.length === 0) {
+     /*if(searchTerm.length === 0) {
       navigate('/')
      }else{
       const item = dataFromHook.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -25,7 +27,9 @@ const InputSearch = () => {
       localStorage.setItem('phrase', JSON.stringify(searchTerm));
       navigate('/search');
       setSearchTerm('');
-     }
+     }*/
+     searchProduct2(searchTerm);
+     setSearchTerm('');
     }
 
     const takeSearchTerm = (e) =>{

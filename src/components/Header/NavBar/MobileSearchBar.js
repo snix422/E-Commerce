@@ -4,6 +4,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import { useState } from "react";
+import useSearchParams from "../../../hooks/useSearchParams";
 
 const MobileSearchBar = ({ stateBurger, changedVisibility }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,9 +12,10 @@ const MobileSearchBar = ({ stateBurger, changedVisibility }) => {
   const dataFromHook = data.length ? Object.values(data[0]) : [];
 
   const navigate = useNavigate();
+  const {searchProduct2} = useSearchParams()
 
     const searchProduct = () => {
-     if(searchTerm.length === 0) {
+     /*if(searchTerm.length === 0) {
       navigate('/')
      }else{
       const item = dataFromHook.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -23,7 +25,9 @@ const MobileSearchBar = ({ stateBurger, changedVisibility }) => {
       localStorage.setItem('phrase', JSON.stringify(searchTerm));
       navigate('/search');
       setSearchTerm('');
-     }
+     }*/
+     searchProduct2(searchTerm);
+     setSearchTerm('');
     }
     return ( 
         <Box sx = {
