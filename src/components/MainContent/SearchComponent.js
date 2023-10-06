@@ -11,9 +11,6 @@ const SearchComponent = () => {
     const items = JSON.parse(localStorage.getItem('searchItem'));
     const phrase = JSON.parse(localStorage.getItem('phrase'));
 
-    console.log(items);
-    console.log(phrase);
-    
     const moveToProductPage = (product) => {
         return <ProductPage product={product} />
     }

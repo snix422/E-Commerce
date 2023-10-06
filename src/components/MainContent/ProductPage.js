@@ -10,7 +10,6 @@ import CategoriesNavBar from "../Header/NavBar/CategoriesNavBar";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const ProductPage = () => {
     const [value, setValue] = useState('Opis');
     const [open, setOpen] = useState({
@@ -19,9 +18,7 @@ const ProductPage = () => {
         opinie:false
     })
     const [categories, setCategories] = useState('');
-
     let {id}  = useParams();
-
     const {data} = useFetch();
     const dataFromHook = data.length ? Object.values(data[0]) : [];
     const product = dataFromHook.filter(prod => prod.id == id);

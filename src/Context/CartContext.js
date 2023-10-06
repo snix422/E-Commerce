@@ -1,5 +1,4 @@
-import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 
 const CartContext = createContext();
@@ -7,19 +6,12 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
 
-
-
     const localCart = JSON.parse(localStorage.getItem('totalItems'));
     const sumPrice = localCart ? Number(localStorage.getItem('totalPrice')) : 0;
     const localFav = JSON.parse(localStorage.getItem('favItems'));
-
-    
-
     const [items, setItems] = useState(localCart ? localCart : []);
     const [totalPrice, setTotalPrice] = useState(sumPrice);
     const [favItems, setFavItems] = useState(localFav ? localFav : [])
-
-    //localStorage.removeItem('totalItems');
 
     const addToCart = (id, name, price, image) => {
         const existingItem = items.find((item) => item.id === id);

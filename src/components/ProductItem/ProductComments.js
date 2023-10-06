@@ -10,7 +10,6 @@ const ProductComments = (props) => {
     const [termComment, setTermComment] = useState('');
     const [comments, setComments] = useState([]);
     const [isAddComment, setIsAddComment] = useState(0);
-
     const user = localStorage.getItem('loggedUser');
    
     async function fetch(){
@@ -31,8 +30,6 @@ const ProductComments = (props) => {
             fetch();  
         }, 5000);
     },[isAddComment])
-
- 
 
     const addOpinie = () => {
         if(termComment.length>5){

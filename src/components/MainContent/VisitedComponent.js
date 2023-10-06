@@ -3,7 +3,6 @@ import ProductItem from "../ProductItem/ProductItem"
 import useFetch from "../../hooks/useFetch"
 import { useEffect } from "react";
 
-
 const VisitedComponent = () => {
 
     const visitedCategories = localStorage.getItem('visitedItem');

@@ -14,9 +14,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const Layout = () => {
 
     const visitedItem = localStorage.getItem('visitedItem');
-
-
-  
     
     return(
         <Box sx={{backgroundColor: 'rgb(240, 238, 238)'}}>

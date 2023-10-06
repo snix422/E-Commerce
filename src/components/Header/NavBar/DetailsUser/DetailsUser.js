@@ -17,16 +17,10 @@ const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerC
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
-    const [isActive, setIsActive] = useState('noactive');
     const { items, favItems, } = useContext(CartContext);
     const {LogOutUser} = useAccount();
-
-   
-
     const currentUser = JSON.parse(localStorage.getItem('loggedUser'));
-    console.log(currentUser);
-
-
+   
     const handleClose = () => {
         setOpen(!open);
     }
@@ -36,14 +30,7 @@ const DetailsUser = ({ changeStateDrawerCart, changeStateDrawerFav, stateDrawerC
         setAnchorEl(event.currentTarget);
     };
 
-    useEffect(() => {
-        setIsActive('noactive');
-    }, [])
-
     const logOut = () => {
-        /*user.auth = false;
-        user.email = "";
-        user.password = '';*/
         toast.info('Zostałeś wylogowany');
         handleClose();
         LogOutUser();

@@ -2,7 +2,6 @@ import { Drawer,Box,Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link } from "react-router-dom";
 
-
 const DrawerCategories = ({stateBurger,changeStateBurger}) => {
 
     const categories = [
@@ -27,7 +26,7 @@ const DrawerCategories = ({stateBurger,changeStateBurger}) => {
               <Typography  sx={{fontFamily:'Montserrat', fontSize:'25px', marginLeft:'5px'}}>Kategorie</Typography>
               {categories.map((category=>{
                     return(
-                        <Link href={'/category' + category.path} className="link">{category.label}</Link>
+                        <Link to={'/category' + category.path} className="link">{category.label}</Link>
                     )
                 }))}
                 </Box>

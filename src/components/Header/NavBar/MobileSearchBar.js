@@ -8,24 +8,9 @@ import useSearchParams from "../../../hooks/useSearchParams";
 
 const MobileSearchBar = ({ stateBurger, changedVisibility }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const {data} = useFetch();
-  const dataFromHook = data.length ? Object.values(data[0]) : [];
-
-  const navigate = useNavigate();
   const {searchProduct2} = useSearchParams()
 
     const searchProduct = () => {
-     /*if(searchTerm.length === 0) {
-      navigate('/')
-     }else{
-      const item = dataFromHook.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase()));
-      localStorage.removeItem('searchItem');
-      localStorage.removeItem('phrase');
-      localStorage.setItem('searchItem', JSON.stringify(item));
-      localStorage.setItem('phrase', JSON.stringify(searchTerm));
-      navigate('/search');
-      setSearchTerm('');
-     }*/
      searchProduct2(searchTerm);
      setSearchTerm('');
     }

@@ -5,7 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useSignUpOrSignIn from "../../hooks/useSignUpOrSignIn";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import useAccount from "../../hooks/useAccount";
+
 
 const SignIn = () => {
 
@@ -20,8 +20,7 @@ const SignIn = () => {
 
     const {formError, isError, loginOrRegistration} = useSignUpOrSignIn();
     const navigate = useNavigate();
-    const {LogIn, LogOut} = useAccount;
-
+   
   useEffect(()=>{
     if(isError === false){
       toast.success('Zostałeś wylogowany');

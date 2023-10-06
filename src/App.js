@@ -10,9 +10,7 @@ import SearchComponent from './components/MainContent/SearchComponent';
 import PaymentHistory from './components/Account/PaymentHistory';
 import SignIn from './components/Account/SignIn';
 import CategoryPage from './components/MainContent/Categories/CategoryPage';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 function App() {
 

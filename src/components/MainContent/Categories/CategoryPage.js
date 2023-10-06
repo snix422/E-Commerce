@@ -4,11 +4,9 @@ import { useState, useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import MainNavBar from "../../Header/NavBar/MainNavBar";
-import useFilteredProducts from "../../../hooks/useFilteredProducts";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
-
 
  const CategoryPage = () => {
     const [producent, setProducent] = useState({
@@ -31,10 +29,7 @@ import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
     const {data} = useFetch();
     const dataFromHook = data.length ? Object.values(data[0]) : [];
     let books = dataFromHook.filter(book => book.categories === categoryName);
-    //let {filteredBooks,filteringProducts} = useFilteredProducts();
-    const navigate = useNavigate();
-    console.log(filteredBooks);
-    
+
     useEffect(()=>{
         if(categoryName === 'headphones' ){
             setCategoryNameToPolish('Słuchawki');
@@ -47,11 +42,7 @@ import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
         }
     },[])
 
-
-
-
     const searchProducts = () => {
-        /*filteringProducts(priceOd,priceDo,producent,status,books);*/
 
         const companies = [
             producent.Stealseries && 'Stealseries',
@@ -79,6 +70,7 @@ import CategoriesNavBar from "../../Header/NavBar/CategoriesNavBar";
     }
 
     const optionalRendering = filteredBooks.length > 0 ?  filteredBooks.map((product)=>{
+        
         return(
            <Box  className="product" sx={{display:'flex', flexDirection: 'column', alignItems:'center', marginTop:'50px', border: '2px solid rgb(240, 238, 238)', width:{
                xl:'25vw',

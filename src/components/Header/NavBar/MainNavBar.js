@@ -17,9 +17,6 @@ const MainNavBar = () => {
     const [isDrawerShopOpen, setIsDrawerShopOpen] = useState(false);
     const [isDrawerFavouriteOpen, setIsDrawerFavouriteOpen] = useState(false);
     const [isDrawerBurger, setIsDrawerBurger] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [products, setProducts] = useState([]);
-    const [myProducts, setMyProducts] = useState([]);
     const [isMobileSearch, setIsMobileSearch] = useState(false);
  
     const {items, totalPrice,favItems,} = useContext(CartContext);
@@ -34,34 +31,6 @@ const MainNavBar = () => {
       localStorage.setItem('favItems', JSON.stringify(favItems));
     }
    
-    const navigate = useNavigate();
- 
-    async function fetch(){
-      const res = await axios.get(`https://gamingshop-4b668-default-rtdb.europe-west1.firebasedatabase.app/Products.json`)
-        setProducts([res.data]);
-    }
-
-    useEffect(()=>{
-        fetch();
-    },[])
-
-    useEffect(()=>{
-      if(products.length>0){
-          setMyProducts(products.length > 0 ? Object.values(products[0]) : null);
-      }
-  },[products])
-
-      const searchProduct = () => {
-       if(searchTerm.length === 0) {
-        navigate('/')
-       }else{
-        const item = myProducts.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase()));
-        setSearchTerm('');
-        localStorage.setItem('searchItem', JSON.stringify(item));
-        navigate('/search');
-       }
-      }
-
       const toggleMobileSearch = () => {
         setIsMobileSearch(!isMobileSearch);
       }
@@ -82,7 +51,7 @@ const MainNavBar = () => {
         },display: 'flex', flexDirection:'column', justifyContent:  'center', alignItems: 'center', width:'100%'}}>
             <Box sx={{display:'flex',justifyContent:'center', alignItems:'center', visibility: isMobileSearch ? 'hidden' : 'visibility'}}>
             <HomeLogo />
-            <InputSearch searchProduct={searchProduct} />  
+            <InputSearch />  
             <DetailsUser changeStateDrawerCart={setIsDrawerShopOpen} stateDrawerCart={isDrawerShopOpen} changeStateDrawerFav={setIsDrawerFavouriteOpen} stateDrawerFav={isDrawerFavouriteOpen} changeStateBurger={setIsDrawerBurger} stateBurger={isDrawerBurger} changeMobileSearch={toggleMobileSearch} isMobile={isMobileSearch} />
             <DrawerShoppingCart changeStateDrawerCart={setIsDrawerShopOpen} stateDrawerCart={isDrawerShopOpen} />
             <DrawerFavItems changeStateDrawerFav={setIsDrawerFavouriteOpen} stateDrawerFav={isDrawerFavouriteOpen} />
