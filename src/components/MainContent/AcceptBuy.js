@@ -1,18 +1,12 @@
-import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom"
-import CartContext from "../../Context/CartContext";
 import axios from 'axios'
 
 const AcceptBuy = () => {
 
-    
-    const {items} = useContext(CartContext)
     const navigate = useNavigate();
-    console.log(items);
     const myItems = JSON.parse(localStorage.getItem('totalItems'));
     console.log(myItems);
-    const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-
+   
     async function buyProduct() {
         navigate('/orderproduct');
         const months = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień','Maj',

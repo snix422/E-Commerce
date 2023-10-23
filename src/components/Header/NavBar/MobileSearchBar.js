@@ -1,12 +1,10 @@
 import { Box, InputBase, Paper,IconButton } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch";
 import { useState } from "react";
 import useSearchParams from "../../../hooks/useSearchParams";
 
-const MobileSearchBar = ({ stateBurger, changedVisibility }) => {
+const MobileSearchBar = ({changedVisibility }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const {searchProduct2} = useSearchParams()
 
@@ -14,6 +12,7 @@ const MobileSearchBar = ({ stateBurger, changedVisibility }) => {
      searchProduct2(searchTerm);
      setSearchTerm('');
     }
+    
     return ( 
         <Box sx = {
             { width: '100vw', height: '15vh', display: 'flex', justifyContent: 'center', alignItems: 'center', position:'relative', top:0,background:'white', zIndex:10} } > 
